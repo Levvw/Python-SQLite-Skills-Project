@@ -15,6 +15,12 @@ def save_and_close():
 
 
 def show_skills():
+    cr.execute(f"select * from skills where user_id = {uid}")
+    results = cr.fetchall()
+    print(f"you have {len(results)} skill/s : ")
+    if len(results) > 0:
+        for row in results:
+            print(f"skill => {row[0]}    Progress => {row[1]} ")
 
     save_and_close()
 
@@ -36,7 +42,10 @@ def delete_skills():
 
 
 def update_skills():
-
+    sk = input("Write the new name of the Skill: ")
+    prog = input("Write the new progress of the Skill: ")
+    cr.execute(
+        f"update skills set progress = '{prog}' where name = '{sk}' and '{uid}'")
     save_and_close()
 
 
@@ -62,6 +71,7 @@ if user_input in commands_list:
         update_skills()
     else:
         print("Program Closed")
+        save_and_close()
 
 else:
     print(f"sorry {user_input} command is not found")
